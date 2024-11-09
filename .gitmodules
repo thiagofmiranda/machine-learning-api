@@ -1,0 +1,3 @@
+[submodule "models/machine-learning-models"]
+	path = models/machine-learning-models
+	url = https://github.com/thiagofmiranda/machine-learning-models.git
