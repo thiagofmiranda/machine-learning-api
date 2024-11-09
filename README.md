@@ -70,4 +70,3 @@ Invoke-WebRequest -Uri "http://localhost:5000/predict" -Method POST -Body '{"tex
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
-```
