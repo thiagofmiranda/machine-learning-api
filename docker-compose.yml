@@ -1,0 +1,46 @@
+volumes:
+  redis:
+    driver: local
+  nginx_logs:
+    driver: local
+
+networks:
+  default:
+    name: api
+    external: false
+
+services:
+  redis:
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - ${REDIS_PORT}:6379
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_PORT=${REDIS_PORT}
+    volumes: 
+      - redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  api:
+    build: .
+    deploy:
+      replicas: 1
+    depends_on:
+      - redis
+
+  nginx:
+    image: openresty/openresty:alpine
+    ports:
+      - "${NGINX_API_PORT}:3000"
+    volumes:
+      - nginx_logs:/var/log/nginx
+      - ./nginx/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf:ro
+    networks:
+      - default
+    depends_on:
+      - api
