@@ -2,7 +2,7 @@ volumes:
   redis:
     driver: local
   nginx_logs:
-    driver: local
+    external: true
 
 networks:
   default:
