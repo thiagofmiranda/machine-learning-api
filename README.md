@@ -38,6 +38,10 @@ This project provides a **Machine Learning API** that serves machine learning mo
    docker-compose up --build
    ```
 
+### Stack Running
+![docker](images/docker.png)
+
+
 ## Usage
 
 Once the API is running, you can access the endpoints:
