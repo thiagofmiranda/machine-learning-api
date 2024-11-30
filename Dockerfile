@@ -1,7 +1,14 @@
 FROM tiangolo/uvicorn-gunicorn-fastapi:python3.9
 
-COPY ./requirements.txt /app/requirements.txt
+ENV APP_HOME=/app
 
-RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
+COPY requirements.txt $APP_HOME/requirements.txt
 
-COPY ./ /app/app
+RUN pip install --no-cache-dir --upgrade -r $APP_HOME/requirements.txt
+
+COPY models/machine-learning-models/models $APP_HOME/models
+
+RUN find $APP_HOME/models -type f -name 'requirements.txt' -exec pip install -r {} \;
+
+COPY routes $APP_HOME/routes
+COPY main.py $APP_HOME/main.py
